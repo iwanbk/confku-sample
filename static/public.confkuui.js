@@ -30,12 +30,12 @@ confkuUI.newVideoDiv = function (peerId) {
 	return elem;
 };
 
-confku.ee.on('new_peer_connected', function (data) {
+confku.ee.on('peer_join_room', function (data) {
 	var msg = "[[" + Date().toString() + "]] '" + data.name + "' entered this room\n";
 	$('#chat_ta_id').append(msg);
 });
 
-confku.ee.on('remove_peer_connected', function (data) {
+confku.ee.on('peer_leave_room', function (data) {
 	var msg = "[[" + Date().toString() + "]] '"  + data.name + "' leave this room\n";
 	$('#chat_ta_id').append(msg);
 });
