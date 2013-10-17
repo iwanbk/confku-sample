@@ -1,0 +1,76 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ConfKu Public Room</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+	<script type="text/javascript" src="/static/js/bootstrap.js"></script>
+	<script type="text/javascript" src="/static/confku.min.js"></script>
+	<script type="text/javascript" src="/static/public.confkuui.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<script type="text/javascript">
+	function formName() {
+		$('#dlgName').dialog({
+			modal: true,
+			width: 300,
+			height: 200,
+			resizable: false,
+			buttons: {
+					"Submit": function() {
+						if ($('#inp_name').val().length > 0) {
+							confku.init('{{hub_host}}', {{hub_port}}, '{{room_id}}', $('#inp_name').val());
+							$(this).dialog("close");
+						}
+					},
+					"Cancel": function() {
+						$(this).dialog("close");
+						alert('You need to tell us your name to join the room');
+					}
+				}
+			});
+	};
+	function sendMsg() {
+		var msg = $('#chat_input_ta').val();
+		if (msg.length > 0) {
+			console.log('sending message:' + msg);
+			$('#chat_input_ta').val("");
+		}
+	}
+	$(document).ready(function() {
+		formName();
+	});
+	</script>
+</head>
+<body style="background-image:url('/static/sandpaper.png');">
+	<div class="container">
+		<div class="row" id="row_head" style="background-color:#BFC0E8">
+			<h2>Conference url: bla bla...</h2>
+		</div><!--row-head-->
+		<div class="row" id="row_videos" style="background-image:url('/static/brushed.png'); height:320px;">
+			<div class='col-md-3'>
+				<video id="localVideo" autoplay muted width='90%' height='90%'>
+				</video>
+			</div>
+		</div><!--row video-->
+		<div class="row" id='row_toolbar' style="background-color:#BFC0E8">
+			<div class='col-md-2'><p>Invite Friend</p></div>
+			<div class='col-md-2'><p>Mute Mic</p></div>
+			<div class='col-md-2'><p>Screen Share</p></div>
+			<div class='col-md-2'><p>Send file</p></div>
+			<div class='col-md-2'><p>Chat</p></div>
+		</div>
+		<div class="row col-md-12" id="row_chat">
+			<textarea class="col-md-12" id="chat_ta_id" rows="8" readonly style="border: 3px solid #cccccc;"></textarea>
+		</div>
+		<div class="row col-md-12">
+			<textarea id="chat_input_ta" class="col-md-10" rows="2"></textarea>
+			<button type="submit" class="btn btn-success btn-lg col-md-2" onclick="sendMsg();">Send</button>
+		</div>
+	</div><!--container-->
+	<div id='dlgName' title='Insert Your Name' size='30' style="display: none;">
+		<p>Name</p>
+		<input type='text' id='inp_name'></input>
+	</div>
+</body>
+</html>
